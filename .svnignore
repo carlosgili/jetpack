@@ -1,3 +1,4 @@
+.babelrc*
 .eslintrc.js
 .eslintignore
 .git
@@ -11,6 +12,7 @@
 .eslintcache
 readme.md
 .github
+babel.config*
 phpunit.xml.dist
 dangerfile.js
 renovate.json
