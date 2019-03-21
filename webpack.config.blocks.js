@@ -106,8 +106,8 @@ function getWebpackConfig() {
 			rules: [
 				TranspileConfig.loader( {
 					workerCount,
-					configFile: path.join( __dirname, 'babel.config.js' ),
-					cacheDirectory: path.join( __dirname, '.cache' ),
+					configFile: path.join( __dirname, 'babel.config.blocks.js' ),
+					cacheDirectory: true,
 					exclude: /node_modules\//,
 				} ),
 				SassConfig.loader( {
