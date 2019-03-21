@@ -28,8 +28,8 @@ const wordpressExternals = require( '@automattic/calypso-build/webpack/wordpress
  */
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-const editorSetup = path.join( __dirname, 'src', 'preset', 'setup', 'editor' );
-const viewSetup = path.join( __dirname, 'src', 'preset', 'setup', 'view' );
+const editorSetup = path.join( __dirname, 'extensions', 'setup', 'editor' );
+const viewSetup = path.join( __dirname, 'extensions', 'setup', 'view' );
 
 function blockScripts( type, inputDir, presetBlocks ) {
 	return presetBlocks
@@ -45,7 +45,7 @@ function getWebpackConfig() {
 	const workerCount = 1;
 	const cssFilename = '[name].css';
 
-	const presetPath = path.join( __dirname, 'src', 'preset', 'index.json' );
+	const presetPath = path.join( __dirname, 'extensions', 'setup', 'index.json' );
 	const presetIndex = require( presetPath );
 	const presetBlocks = _.get( presetIndex, [ 'production' ], [] );
 	const presetBetaBlocks = _.get( presetIndex, [ 'beta' ], [] );
@@ -53,7 +53,7 @@ function getWebpackConfig() {
 
 	// Helps split up each block into its own folder view script
 	const viewBlocksScripts = allPresetBlocks.reduce( ( viewBlocks, block ) => {
-		const viewScriptPath = path.join( __dirname, 'src', 'blocks', block, 'view.js' );
+		const viewScriptPath = path.join( __dirname, 'extensions', 'blocks', block, 'view.js' );
 		if ( fs.existsSync( viewScriptPath ) ) {
 			viewBlocks[ block + '/view' ] = [ viewSetup, ...[ viewScriptPath ] ];
 		}
@@ -63,13 +63,13 @@ function getWebpackConfig() {
 	// Combines all the different blocks into one editor.js script
 	const editorScript = [
 		editorSetup,
-		...blockScripts( 'editor', path.join( __dirname, 'src' ), presetBlocks ),
+		...blockScripts( 'editor', path.join( __dirname, 'extensions' ), presetBlocks ),
 	];
 
 	// Combines all the different blocks into one editor-beta.js script
 	const editorBetaScript = [
 		editorSetup,
-		...blockScripts( 'editor', path.join( __dirname, 'src' ), allPresetBlocks ),
+		...blockScripts( 'editor', path.join( __dirname, 'extensions' ), allPresetBlocks ),
 	];
 
 	const webpackConfig = {
@@ -83,7 +83,7 @@ function getWebpackConfig() {
 		mode: isDevelopment ? 'development' : 'production',
 		devtool: process.env.SOURCEMAP || ( isDevelopment ? '#eval' : false ),
 		output: {
-			path: path.join( __dirname, 'dist' ),
+			path: path.join( __dirname, '_inc', 'blocks' ),
 			filename: '[name].js',
 			libraryTarget: 'window',
 		},
