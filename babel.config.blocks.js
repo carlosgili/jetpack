@@ -3,7 +3,6 @@ const config = {
 		[
 			'@babel/env',
 			{
-				targets: { browsers: [ 'last 2 versions', 'Safari >= 10', 'iOS >= 10', 'ie >= 11' ] },
 				useBuiltIns: 'entry',
 				// allows es7 features like Promise.prototype.finally
 				shippedProposals: true,
